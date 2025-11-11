@@ -1,24 +1,22 @@
-// src/stores/authStore.js
 import { defineStore } from "pinia";
+import { ref, computed } from "vue";
 
-export const useAuthStore = defineStore("auth", {
-  state: () => ({
-    token: localStorage.getItem("token") || null,
-  }),
+export const useAuthStore = defineStore("auth", () => {
+  const token = ref(localStorage.getItem("token") || null);
 
-  getters: {
-    isLoggedIn: (state) => !!state.token,
-  },
+  const isLoggedIn = computed(() => !!token.value);
 
-  actions: {
-    login(token) {
-      this.token = token;
-      localStorage.setItem("token", token);
-    },
+  function login(newToken) {
+    token.value = newToken;
+    localStorage.setItem("token", newToken);
+    console.log("LOGIN CALLED, TOKEN =", newToken);
+  }
 
-    logout() {
-      this.token = null;
-      localStorage.removeItem("token");
-    },
-  },
+  function logout() {
+    token.value = null;
+    localStorage.removeItem("token");
+    console.log("LOGOUT CALLED");
+  }
+
+  return { token, isLoggedIn, login, logout };
 });

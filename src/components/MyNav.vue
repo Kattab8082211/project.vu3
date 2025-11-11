@@ -1,41 +1,34 @@
 <template>
   <nav class="navbar" :class="{ dark: isDark }">
-    <!-- Logo -->
     <div class="you">
       <img src="/log.png" alt="Logo" style="width: 40px; height: 40px" />
     </div>
 
-    <!-- Menu Button -->
     <button class="menu-toggle" @click="menuOpen = !menuOpen">☰</button>
 
-    <!-- Links -->
     <ul class="nav-links" :class="{ open: menuOpen }">
-      <!-- روابط عامة -->
-      <li v-for="(link, index) in links" :key="index">
-        <router-link :to="link.path" @click="menuOpen = false">
-          {{ link.name }}
-        </router-link>
-      </li>
-
-      <!-- ✅ روابط حسب حالة المستخدم -->
       <template v-if="!isLoggedIn">
         <li>
           <router-link to="/login" @click="menuOpen = false">Login</router-link>
         </li>
         <li>
-          <router-link to="/register" @click="menuOpen = false">
-            Register
-          </router-link>
+          <router-link to="/register" @click="menuOpen = false"
+            >Register</router-link
+          >
         </li>
       </template>
 
       <template v-else>
+        <li v-for="(link, index) in links" :key="index">
+          <router-link :to="link.path" @click="menuOpen = false">
+            {{ link.name }}
+          </router-link>
+        </li>
         <li>
           <button @click="logout" class="logout-btn">Logout</button>
         </li>
       </template>
 
-      <!-- زر الوضع الليلي -->
       <li class="mobile-dark">
         <DarkMode @toggle="toggleDarkMode" />
       </li>
@@ -48,22 +41,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import DarkMode from "@/components/BouttonDark.vue";
 import { useAuthStore } from "@/stores/authStore";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 
 const auth = useAuthStore();
-const { isLoggedIn } = storeToRefs(auth); // 👈 reactive getter
+const isLoggedIn = computed(() => auth.isLoggedIn);
+
 const router = useRouter();
-
-const isDark = ref(false);
 const menuOpen = ref(false);
-
-const toggleDarkMode = () => {
-  isDark.value = !isDark.value;
-};
+const isDark = ref(false);
+const toggleDarkMode = () => (isDark.value = !isDark.value);
 
 const links = ref([
   { name: "Home", path: "/" },
