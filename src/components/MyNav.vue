@@ -25,7 +25,6 @@
           </router-link>
         </li>
 
-        <!-- 🔹 زر Logout يظهر فقط في الموبايل -->
         <li class="mobile-only">
           <button @click="logout" class="logout-btn">Logout</button>
         </li>
@@ -36,7 +35,7 @@
       </li>
     </ul>
 
-    <!-- 🔹 أزرار الجانب الأيمن (ديسكتوب فقط) -->
+    <!--  أزرار الجانب الأيمن (ديسكتوب فقط) -->
     <div class="nav-actions desktop-only">
       <DarkMode @toggle="toggleDarkMode" />
 
@@ -131,7 +130,6 @@ const logout = async () => {
   align-items: center;
 }
 
-/* 🔴 زر Logout */
 .logout-btn {
   background: #d9534f;
   color: white;

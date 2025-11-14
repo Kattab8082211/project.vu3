@@ -76,7 +76,7 @@ async function handleLogin() {
     const token = response.data.token;
     auth.login(token); // حفظ التوكن في Pinia
 
-    // ✅ nextTick للتأكد من تحديث reactive قبل الانتقال
+    //  nextTick للتأكد من تحديث reactive قبل الانتقال
     await nextTick();
 
     router.push("/"); // توجيه المستخدم للصفحة الرئيسية
