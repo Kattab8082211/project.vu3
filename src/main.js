@@ -9,8 +9,13 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/tailwind.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faRightFromBracket);
+library.add(faMoon, faSun);
 
 library.add(faUser, faLock);
 const app = createApp(App);

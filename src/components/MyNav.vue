@@ -24,7 +24,9 @@
             {{ link.name }}
           </router-link>
         </li>
-        <li>
+
+        <!-- 🔹 زر Logout يظهر فقط في الموبايل -->
+        <li class="mobile-only">
           <button @click="logout" class="logout-btn">Logout</button>
         </li>
       </template>
@@ -34,12 +36,21 @@
       </li>
     </ul>
 
-    <div class="nav-actions desktop-dark">
+    <!-- 🔹 أزرار الجانب الأيمن (ديسكتوب فقط) -->
+    <div class="nav-actions desktop-only">
       <DarkMode @toggle="toggleDarkMode" />
+
+      <!-- 🔹 زر Logout يظهر في الديسكتوب على اليمين -->
+      <button
+        v-if="isLoggedIn"
+        @click="logout"
+        class="logout-btn desktop-logout"
+      >
+        <font-awesome-icon icon="fa-right-from-bracket" />
+      </button>
     </div>
   </nav>
 </template>
-
 <script setup>
 import { ref, computed } from "vue";
 import DarkMode from "@/components/BouttonDark.vue";
@@ -67,7 +78,6 @@ const logout = async () => {
   await router.push("/login");
 };
 </script>
-
 <style scoped>
 .navbar {
   padding: 10px 20px;
@@ -80,9 +90,9 @@ const logout = async () => {
   right: 0;
   background-color: #bcb6b6;
   box-shadow: 0px 0px 9px -3px black;
-  color: #000;
   z-index: 9999;
-  transition: background-color 0.3s, color 0.3s;
+  color: white;
+  font-size: 16px;
 }
 
 .navbar.dark {
@@ -94,33 +104,31 @@ const logout = async () => {
   display: flex;
   list-style: none;
   gap: 15px;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-links a {
   color: inherit;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
+  transition: 0.3s;
 }
 
 .nav-links a:hover {
-  color: #1b0fff;
+  background: #000;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.router-link-exact-active {
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: inherit;
 }
 
 /* 🔴 زر Logout */
@@ -131,12 +139,35 @@ const logout = async () => {
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 .logout-btn:hover {
   background: #b52b27;
 }
 
+/* ========== RESPONSIVE ========== */
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-dark {
+  display: none;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: flex;
+}
+
+/* 🔹 موبايل */
 @media (max-width: 768px) {
   .nav-links {
     position: absolute;
@@ -145,48 +176,29 @@ const logout = async () => {
     right: 0;
     flex-direction: column;
     background-color: #bcb6b6;
-    border-top: 1px solid #ccc;
-    display: none;
     padding: 10px 0;
-    text-align: center;
-  }
-
-  .navbar.dark .nav-links {
-    background-color: #1e1e1e;
+    display: none;
   }
 
   .nav-links.open {
     display: flex;
-    animation: slideDown 0.3s ease;
   }
 
   .mobile-dark {
-    margin-top: 10px;
+    display: block;
   }
 
-  .desktop-dark {
+  .desktop-only {
     display: none;
+  }
+
+  .mobile-only {
+    display: block;
+    margin-top: 10px;
   }
 
   .menu-toggle {
     display: block;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobile-dark {
-    display: none;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 </style>

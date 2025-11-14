@@ -1,13 +1,12 @@
 <template>
   <div class="app-container">
     <header class="header">
-      <button @click="toggleDarkMode">
-        <span v-if="isDark">
-          <i class="fa-solid fa-moon fa-2xl">moon</i>
-        </span>
-        <span v-else>
-          <i class="fa-solid fa-sun-bright fa-2xl">dark</i>
-        </span>
+      <button class="bg" @click="toggleDarkMode">
+        <font-awesome-icon
+          :icon="isDark ? 'fa-moon' : 'fa-sun'"
+          class="fa-2xl"
+          :style="{ color: isDark ? '#000' : '#fbc531' }"
+        />
       </button>
     </header>
   </div>
@@ -46,8 +45,6 @@ onMounted(() => {
   background: #42b983;
   color: white;
   padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   transition: background 0.3s;
@@ -55,5 +52,9 @@ onMounted(() => {
 
 .toggle-btn:hover {
   background: #2d8b64;
+}
+.bg {
+  background-color: #bcb6b6;
+  border: 0px;
 }
 </style>
