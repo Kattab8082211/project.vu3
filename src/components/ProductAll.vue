@@ -17,7 +17,9 @@
           </p>
           <div class="product-footer">
             <span class="product-price">${{ product.price }}</span>
-            <button class="add-btn">Add to Cart</button>
+            <button class="add-btn" @click="addToCart(product)">
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>
@@ -28,10 +30,16 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import TheSearch from "@/components/SearchApi.vue";
-
+import { useCartStore } from "@/stores/CartStore";
 const products = ref([]);
 const loading = ref(true);
 const error = ref(null);
+
+const cartStore = useCartStore();
+
+function addToCart(product) {
+  cartStore.addToCart(product);
+}
 
 const fetchProducts = async () => {
   try {

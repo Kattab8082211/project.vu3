@@ -36,6 +36,14 @@
     </ul>
 
     <!--  أزرار الجانب الأيمن (ديسكتوب فقط) -->
+    <!--    <li class="cart-icon">
+      <button>
+        <router-link to="/cart">
+          dd
+          <span class="cart-badge">{{ cartCount }}</span>
+        </router-link>
+      </button>
+    </li>-->
     <div class="nav-actions desktop-only">
       <DarkMode @toggle="toggleDarkMode" />
 
